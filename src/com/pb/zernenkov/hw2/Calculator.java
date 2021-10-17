@@ -3,61 +3,42 @@ package com.pb.zernenkov.hw2;
 import java.util.Scanner;
 
 public class Calculator {
-    static Scanner scanner = new Scanner(System.in);
+    public static void  main (String [] args)
+    {
+        int operand1, operand2;
+        char sign;
+        float result;
+        Scanner in = new Scanner(System.in);
+        System.out.println("Ввести первое целое число");
+        operand1 = in.nextInt();
+        System.out.println("Ввести второе целое число");
+        operand2 = in.nextInt();
+        System.out.println("Введите значение +, -, *, /");
+        sign = in.next().charAt(0);
 
-    public static void main(String[] args) {
-        int operand1 = nextInt();
-        int operand2 = nextInt();
-        char operation = getOperation();
-        int result = calc(operand1, operand2, operation);
-        System.out.println("Результат операции: "+result);
-    }
-
-    public static int nextInt(){
-        System.out.println("Введите число:");
-        int operand;
-        if(scanner.hasNextInt()){
-            operand = scanner.nextInt();
-        } else {
-            System.out.println("Допущена ошибка при вводе числа. Попробуйте еще раз.");
-            scanner.next();//рекурсия
-            operand = nextInt();
+        try {
+            switch (sign){
+                case  '+':
+                    result = operand1 + operand2;
+                    break;
+                case '-':
+                    result = operand1 - operand2;
+                    break;
+                case  '*':
+                    result = operand1 * operand2;
+                    break;
+                case '/':
+                    if (operand2 ==0) throw new Exception ("Делить на 0 нельзя");
+                    result = operand1/operand2;
+                    break;
+                default:
+                    throw new Exception ("Нельзя выполнить");
+            }
+            System.out.println("Результат выполнения операции:" + operand1 + "" + sign + "" + operand2 + " = " + result);
         }
-        return operand;
-    }
-
-    public static char getOperation(){
-        System.out.println("Введите операцию:");
-        char operation;
-        if(scanner.hasNext()){
-            operation = scanner.next().charAt(0);
-        } else {
-            System.out.println("Вы допустили ошибку при вводе операции. Попробуйте еще раз.");
-            scanner.next();//рекурсия
-            operation = getOperation();
+        catch (Exception operand)
+        {
+            System.out.println(operand.getMessage ());
         }
-        return operation;
-    }
-
-    public static int calc(int operand1, int operand2, char operation){
-        int result;
-        switch (operation){
-            case '+':
-                result = operand1+operand2;
-                break;
-            case '-':
-                result = operand1-operand2;
-                break;
-            case '*':
-                result = operand1*operand2;
-                break;
-            case '/':
-                result = operand1/operand2;
-                break;
-            default:
-                System.out.println("Операция не распознана. Повторите ввод.");
-                result = calc(operand1, operand2, getOperation());//рекурсия
-        }
-        return result;
     }
 }
